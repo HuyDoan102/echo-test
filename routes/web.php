@@ -27,3 +27,7 @@ Route::get('test', function () {
     // this checks for the event
     return view('test');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
