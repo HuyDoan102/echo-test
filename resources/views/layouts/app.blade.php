@@ -94,13 +94,20 @@
 </html>
 <script src="{{ asset('js/socket.io.js') }}"></script>
 <script>
+    var number = 0;
     var socket = io('http://laravel-echo.local:3000'); // config virtual host
     socket.on("test-channel:messageSent", function(message){
         var messageNotification = message.content;
-        console.log(messageNotification);
-        // increase the power everytime we load test route
-        $('.notification').text(parseInt($('.notification').text()) + parseInt(message.power));
-        $('.messages-notification').append('<span class="dropdown-item dropdown-header messages"></span>');
+        number += message.power;
+
+        sessionStorage.setItem('numberNotify', JSON.stringify(number));
+        var numberSession = sessionStorage.getItem('numberNotify');
+        $('.notification').text(numberSession);
+        console.log(sessionStorage.getItem('numberNotify'));
+
+        sessionStorage.setItem('messageNotify', JSON.stringify(messageNotification));
+
+        $('.messages-notification').append('<span class="dropdown-item dropdown-header messages">' + messageNotification + '</span>');
         $('.messages').text(messageNotification);
     });
 </script>
