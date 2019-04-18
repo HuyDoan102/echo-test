@@ -15,6 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -50,6 +51,19 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
+                                <a class="nav-link" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-bell-o"></i>
+                                    <span class="badge badge-warning navbar-badge notification">0</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right messages-notification">
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="fa fa-envelope mr-2"></i> New messages
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
@@ -78,3 +92,15 @@
     </div>
 </body>
 </html>
+<script src="{{ asset('js/socket.io.js') }}"></script>
+<script>
+    var socket = io('http://laravel-echo.local:3000'); // config virtual host
+    socket.on("test-channel:messageSent", function(message){
+        var messageNotification = message.content;
+        console.log(messageNotification);
+        // increase the power everytime we load test route
+        $('.notification').text(parseInt($('.notification').text()) + parseInt(message.power));
+        $('.messages-notification').append('<span class="dropdown-item dropdown-header messages"></span>');
+        $('.messages').text(messageNotification);
+    });
+</script>
