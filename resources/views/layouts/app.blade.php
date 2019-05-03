@@ -16,6 +16,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -51,7 +52,7 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a class="nav-link" data-toggle="dropdown" href="#">
+                                <a class="nav-link message-notification" data-toggle="dropdown" href="#">
                                     <i class="fa fa-bell-o"></i>
                                     <span class="badge badge-warning navbar-badge notification">0</span>
                                 </a>
@@ -93,6 +94,7 @@
 </body>
 </html>
 <script src="{{ asset('js/socket.io.js') }}"></script>
+{{--<script src="{{ asset('js/custom.js') }}"></script>--}}
 <script>
     var number = 0;
     var socket = io('http://laravel-echo.local:3000'); // config virtual host
@@ -103,7 +105,6 @@
         sessionStorage.setItem('numberNotify', JSON.stringify(number));
         var numberSession = sessionStorage.getItem('numberNotify');
         $('.notification').text(numberSession);
-        console.log(sessionStorage.getItem('numberNotify'));
 
         sessionStorage.setItem('messageNotify', JSON.stringify(messageNotification));
 
